@@ -6,10 +6,6 @@ const contactsSchema = Joi.object({
     .email()
     .required()
     .messages({ 'any.required': 'missing required email field' }),
-  phone: Joi.string()
-    .pattern(/^\(\d{3}\) \d{3}-\d{4}$/)
-    .max(18)
-    .required()
-    .messages({ 'any.required': 'missing required phone field' }),
+  phone: Joi.string().required().messages({ 'any.required': 'missing required phone field' }),
 });
 module.exports = { contactsSchema };

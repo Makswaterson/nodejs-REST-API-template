@@ -6,7 +6,7 @@ const ctrlWrapper = require('../decorators/ctrlWrapper');
 
 const getAllContacts = async (req, res) => {
   const result = await contactService.listContacts();
-  res.json({ result });
+  res.json(result);
 };
 const getContactById = async (req, res) => {
   const { contactId } = req.params;

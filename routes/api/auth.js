@@ -8,4 +8,6 @@ const router = express.Router();
 
 router.post('/register', validateBody(schemas.registerSchema), authControllers.register);
 
+router.post('/login', validateBody(schemas.loginSchema), authControllers.login);
+
 module.exports = router;

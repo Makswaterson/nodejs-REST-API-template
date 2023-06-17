@@ -2,10 +2,10 @@ const express = require('express');
 
 const contactsControllers = require('../../controllers/contacts');
 const schemas = require('../../schemas/contacts-schema');
-const validateBody = require('../../decorators/validateBody');
-const validateFavorite = require('../../decorators/validateFavorite');
-const authentication = require('../../decorators/authenticate');
-const isValidId = require('../../decorators/isValidId');
+const validateBody = require('../../middlewares/validateBody');
+const validateFavorite = require('../../middlewares/validateFavorite');
+const authentication = require('../../middlewares/authenticate');
+const isValidId = require('../../middlewares/isValidId');
 
 const router = express.Router();
 

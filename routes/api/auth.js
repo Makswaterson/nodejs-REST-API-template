@@ -10,6 +10,10 @@ const router = express.Router();
 
 router.post('/register', validateBody(schemas.registerSchema), authControllers.register);
 
+router.get('/verify/:verificationToken', authControllers.verifyUser);
+
+router.post('/verify', validateBody(schemas.emailSchema), authControllers.resendVerifyEmail);
+
 router.post('/login', validateBody(schemas.loginSchema), authControllers.login);
 
 router.get('/current', authentication, authControllers.getCurrent);

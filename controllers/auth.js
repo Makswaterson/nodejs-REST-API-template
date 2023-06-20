@@ -4,12 +4,13 @@ const gravatar = require('gravatar');
 const path = require('path');
 const fs = require('fs/promises');
 const Jimp = require('jimp');
+const { nanoid } = require('nanoid');
 
-const { SECRET_KEY } = process.env;
+const { SECRET_KEY, BAZE_URL } = process.env;
 
 const User = require('../models/user');
 
-const { HttpError } = require('../helpers');
+const { HttpError, sendEmail } = require('../helpers');
 
 const ctrlWrapper = require('../middlewares/ctrlWrapper');
 
@@ -27,7 +28,23 @@ const register = async (req, res) => {
 
   const avatarURL = gravatar.url(email);
 
-  const newUser = await User.create({ ...req.body, password: hashPassword, avatarURL });
+  const verificationToken = nanoid();
+
+  const newUser = await User.create({
+    ...req.body,
+    password: hashPassword,
+    avatarURL,
+    verificationToken,
+  });
+
+  const verifyEmail = {
+    to: email,
+    subject: 'Verify your email',
+    html: `<a target="_blank" href="${BAZE_URL}/users/verify/${verificationToken}">Click</a>`,
+  };
+
+  await sendEmail(verifyEmail);
+
   res.status(201).json({
     user: {
       email: newUser.email,
